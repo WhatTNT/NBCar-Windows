@@ -28,13 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.textGPStatus = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // textGPStatus
+            // 
+            this.textGPStatus.AutoSize = true;
+            this.textGPStatus.Location = new System.Drawing.Point(13, 13);
+            this.textGPStatus.Name = "textGPStatus";
+            this.textGPStatus.Size = new System.Drawing.Size(101, 12);
+            this.textGPStatus.TabIndex = 0;
+            this.textGPStatus.Text = "手柄状态：检测中";
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.Controls.Add(this.textGPStatus);
+            this.Name = "Form1";
+            this.Text = "NBCar管理程序";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label textGPStatus;
     }
 }
 
