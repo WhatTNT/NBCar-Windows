@@ -22,7 +22,7 @@ namespace NBCar_Windows
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckJoyStick();
-            Server.Init();
+            ServerManager.Init();
         }
 
         private void CheckJoyStick()
@@ -48,20 +48,33 @@ namespace NBCar_Windows
             ParameterizedThreadStart ts = new ParameterizedThreadStart(ListenToGamepad);
             Thread thread = new Thread(ts);
             thread.Start(joystick);
+
+            new Thread(new ThreadStart(UpdateUI)).Start();
+
         }
 
-         public void ListenToGamepad(object obj)
+        public void ListenToGamepad(object obj)
         {
             var joystick = obj as Joystick;
             while (true)
             {
                 var state = joystick.GetCurrentState();
                 DataManager.Cauculate(state.X, state.Y, state.Z);
-                this.Invoke(new AsynUpdateUI(delegate () {
+                Thread.Sleep(20);
+            }
+        }
+
+        public void UpdateUI()
+        {
+            while (true)
+            {
+                this.Invoke(new AsynUpdateUI(delegate ()
+                {
                     labelLeftPower.Text = "左马达：" + (DataManager.GetLeftPower() * 100 / DataManager.MAX_POWER) + "%";
                     labelRightPower.Text = "右马达：" + (DataManager.GetRightPower() * 100 / DataManager.MAX_POWER) + "%";
-                }
-                    ));
+                    labelServer.Text = "小车状态：" + (ServerManager.IsConnect() ? "已连接" : "等待");
+                    
+                }));
                 Thread.Sleep(20);
             }
         }
