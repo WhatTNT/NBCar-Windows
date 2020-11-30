@@ -22,6 +22,7 @@ namespace NBCar_Windows
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckJoyStick();
+            Server.Init();
         }
 
         private void CheckJoyStick()
@@ -54,13 +55,17 @@ namespace NBCar_Windows
             var joystick = obj as Joystick;
             while (true)
             {
-                joystick.Poll();
-                var datas = joystick.GetBufferedData();
-                foreach(var state in datas)
-                {
-                    Console.WriteLine(state);
+                var state = joystick.GetCurrentState();
+                DataManager.Cauculate(state.X, state.Y, state.Z);
+                this.Invoke(new AsynUpdateUI(delegate () {
+                    labelLeftPower.Text = "左马达：" + (DataManager.GetLeftPower() * 100 / DataManager.MAX_POWER) + "%";
+                    labelRightPower.Text = "右马达：" + (DataManager.GetRightPower() * 100 / DataManager.MAX_POWER) + "%";
                 }
+                    ));
+                Thread.Sleep(20);
             }
         }
+
+        delegate void AsynUpdateUI();
     }
 }
