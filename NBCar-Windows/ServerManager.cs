@@ -12,7 +12,7 @@ namespace NBCar_Windows
 
         public static void Init()
         {
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 3001);
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 3000);
             ss = new Socket(ipep.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             ss.Bind(ipep);
             ss.Listen(0);
