@@ -73,7 +73,7 @@ namespace NBCar_Windows
                     labelLeftPower.Text = "左马达：" + (DataManager.GetLeftPower() * 100 / DataManager.MAX_POWER) + "%";
                     labelRightPower.Text = "右马达：" + (DataManager.GetRightPower() * 100 / DataManager.MAX_POWER) + "%";
                     labelServer.Text = "小车状态：" + (ServerManager.IsConnect() ? "已连接" : "等待");
-                    
+
                 }));
                 Thread.Sleep(20);
             }
