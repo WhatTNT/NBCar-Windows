@@ -35,10 +35,10 @@ namespace NBCar_Windows
                         double leftScale = (double)DataManager.GetLeftPower() / DataManager.MAX_POWER;
                         double rightScale = (double)DataManager.GetRightPower() / DataManager.MAX_POWER;
 
-                        var packet = new ServerStatusPacket((byte)(leftScale*100 +100), (byte)(rightScale * 100 + 100) );
+                        var packet = new ServerStatusPacket((byte)(leftScale * 100 * Config.CAR_SPEED_MULTI + 100), (byte)(rightScale * 100 * Config.CAR_SPEED_MULTI + 100));
                         var frame = packet.Build();
                         client.Send(frame, frame.Length, SocketFlags.None);
-                        Thread.Sleep(20);
+                        Thread.Sleep(Config.CAR_STATUS_DELAY);
                     }
                 }
                 catch { }
